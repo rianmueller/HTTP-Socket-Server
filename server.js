@@ -21,7 +21,16 @@ const server = net.createServer(socket => {
     // console.log(chunk.toString());
     // console.log(chunk.toString().split(" ")[1]);
     // console.log(files[chunk.toString().split(" ")[1]].length);
-    if (chunk.toString().split(" ")[1] in files) {
+    if (chunk.toString().split(" ")[1] === "/css/styles.css") {
+      socket.write(`HTTP/1.1 200 OK
+Server: Rian's custom JS HTTP server
+Date: ${new Date().toUTCString()}
+Content-Type: text/css
+Content-Length: ${files["/css/styles.css"].length}
+Connection: keep-alive
+
+${files["/css/styles.css"]}`);
+    } else if (chunk.toString().split(" ")[1] in files) {
       socket.write(`HTTP/1.1 200 OK
 Server: Rian's custom JS HTTP server
 Date: ${new Date().toUTCString()}
@@ -35,7 +44,7 @@ ${files[chunk.toString().split(" ")[1]]}`);
 Server: Rian's custom JS HTTP server
 Date: ${new Date().toUTCString()}
 Content-Type: text/html; charset=utf-8
-Content-Length: 263
+Content-Length: ${files["/404.html"].length}
 Connection: keep-alive
 
 ${files["/404.html"]}`);

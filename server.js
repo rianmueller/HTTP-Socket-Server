@@ -5,22 +5,8 @@ const PORT = 8080;
 
 const server = net.createServer(socket => {
   socket.on("data", chunk => {
-    // read incoming data
-    // console.log("foo");
-    // console.log(chunk.toString());
-
-    // parse the string
-    // - isolate the part between the spaces
-    // console.log(chunk.toString().split(" ")[1]);
-
-    // grab the right file
-    // console.log(files[chunk.toString().split(" ")[1]]);
-
-    // write outgoing data
-    // - check content-length
-    // console.log(chunk.toString());
-    // console.log(chunk.toString().split(" ")[1]);
-    // console.log(files[chunk.toString().split(" ")[1]].length);
+    console.log("INCOMING REQUEST");
+    console.log(chunk.toString());
     if (chunk.toString().split(" ")[1] === "/css/styles.css") {
       socket.write(`HTTP/1.1 200 OK
 Server: Rian's custom JS HTTP server
@@ -53,11 +39,11 @@ ${files["/404.html"]}`);
   });
 
   socket.on("end", () => {
-    // handle client disconnect
+    console.log("Client has closed the connection");
   });
 
   socket.on("error", err => {
-    // handle error in connection
+    console.log("Error : " + err);
   });
 });
 
